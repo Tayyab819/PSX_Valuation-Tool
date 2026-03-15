@@ -1,18 +1,44 @@
-# PSX Company Valuation Tool
+# PSX Investor Toolkit
 
-This Python application allows users to estimate the intrinsic value of Pakistan Stock Exchange companies.
+This Python application is a comprehensive finance toolkit for investors in Pakistan. It allows users to analyze stocks on the Pakistan Stock Exchange (PSX), estimate intrinsic values, and calculate income tax for both salaried and business individuals.
 
-Features:
-- Real-time stock price using yfinance
-- Cost of Equity (CAPM)
-- WACC calculation
-- Future earnings estimation
-- PE valuation
-- Dividend Discount Model
-- Margin of Safety
+Features
+Stock Valuation Tool
 
-Built using:
+Real-time stock prices using yfinance
+
+Cost of Equity calculation using CAPM
+
+Weighted Average Cost of Capital (WACC) calculation
+
+Future Earnings estimation
+
+Fair Value calculation using:
+
+PE Valuation Method
+
+Dividend Discount Model (DDM)
+
+Margin of Safety analysis
+
+Buy/Sell/Hold recommendations based on Margin of Safety
+
+Stock Price Checker
+
+Quickly fetch the latest market price of any PSX-listed company
+
+Income Tax Calculator
+
+Calculate income tax for Salaried and Business professionals
+
+Supports progressive tax slabs
+
+Includes surcharge for high-income individuals
+
+Built With
+
 Python
-Gradio
-yfinance
 
+Gradio – interactive web interface
+
+yfinance – real-time stock data
