@@ -69,7 +69,7 @@ def check_price(ticker):
     return round(price,2)
 
 
-# ---------- Tax Calculator ----------
+# ---------- Income Tax Calculator ----------
 def tax_calculator(profession, income):
 
     income = float(income)
@@ -80,17 +80,22 @@ def tax_calculator(profession, income):
             tax = 0
         elif 600000<income <= 1200000:
             tax = income * 0.01
+
         elif 1200000<income <= 2200000:
             tax = income * 0.11
+
         elif 2200000<income <= 3200000:
             tax = income * 0.23
+
         elif 3200000< income <= 4100000:
             tax = income * 0.30
+
         else:
             tax = income * 0.35
+        #Surcharge
+        if income > 10000000 :
+            tax=tax+(tax*0.9)
 
-        if income > 10000000:
-            tax = tax + (tax * 0.09)
 
 
     elif profession == "Business":
@@ -99,16 +104,45 @@ def tax_calculator(profession, income):
             tax = 0
         elif 600000< income <= 1200000:
             tax = income * 0.15
+
         elif 1200000 < income <= 1600000:
             tax = income * 0.20
+
         elif  1600000<income <= 3200000:
             tax = income * 0.30
+
         elif 3200000< income <= 5600000:
             tax = income * 0.40
         else:
             tax = income * 0.45
 
     return f"Tax Payable = {round(tax,2)} PKR"
+
+
+# ---------- Capital Gain Tax ----------
+def capital_gain_tax(gain, holding_period):
+
+    gain = float(gain)
+    holding_period = int(holding_period)
+
+    if holding_period <= 1:
+        tax = gain * 0.15
+    elif holding_period < 2:
+        tax = gain * 0.125
+    elif holding_period < 3:
+        tax = gain * 0.10
+    elif holding_period < 4:
+        tax = gain * 0.075
+    elif holding_period < 5:
+        tax = gain * 0.05
+    elif holding_period < 6:
+        tax = gain * 0.025
+    else:
+        tax = 0
+
+    net_gain = gain - tax
+
+    return round(tax,2), round(net_gain,2)
 
 
 # ---------- UI ----------
@@ -156,19 +190,15 @@ with gr.Blocks(title="PSX Analysis Terminal") as app:
         # -------- TAB 2 : PRICE CHECKER --------
         with gr.Tab("Stock Price"):
 
-            ticker2 = gr.Textbox(label="Stock Ticker (example: SYS.KA)")
+            ticker2 = gr.Textbox(label="Stock Ticker")
             btn2 = gr.Button("Get Price")
             price2 = gr.Textbox(label="Current Market Price")
 
-            btn2.click(
-                check_price,
-                inputs=[ticker2],
-                outputs=[price2]
-            )
+            btn2.click(check_price, inputs=[ticker2], outputs=[price2])
 
 
-        # -------- TAB 3 : TAX CALCULATOR --------
-        with gr.Tab("Tax Calculator"):
+        # -------- TAB 3 : INCOME TAX --------
+        with gr.Tab("Income Tax Calculator"):
 
             profession = gr.Dropdown(["Salary", "Business"], label="Profession")
             income = gr.Number(label="Annual Income")
@@ -181,6 +211,24 @@ with gr.Blocks(title="PSX Analysis Terminal") as app:
                 tax_calculator,
                 inputs=[profession, income],
                 outputs=[tax_output]
+            )
+
+
+        # -------- TAB 4 : CAPITAL GAIN TAX --------
+        with gr.Tab("Capital Gain Tax"):
+
+            gain = gr.Number(label="Capital Gain (PKR)")
+            holding = gr.Number(label="Holding Period (Years)")
+
+            cg_btn = gr.Button("Calculate Capital Gain Tax")
+
+            cg_tax = gr.Textbox(label="Tax Payable")
+            cg_net = gr.Textbox(label="Net Gain After Tax")
+
+            cg_btn.click(
+                capital_gain_tax,
+                inputs=[gain, holding],
+                outputs=[cg_tax, cg_net]
             )
 
 
