@@ -15,10 +15,6 @@ Search any company listed on the Pakistan Stock Exchange
 
 Fetch available tickers dynamically using Yahoo Finance
 
-Automate the process of extracting tickers from search results
-
-No need to manually enter tickers
-
 **📊 Stock Valuation Tool**
 
 Estimate the intrinsic value of a company using multiple financial models
